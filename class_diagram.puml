@@ -1,0 +1,36 @@
+
+@startuml
+title CSE402 - Student Result Manager
+
+class Student {
+    - student_id: str
+    - name: str
+    - marks: Dict[str, float]
+}
+
+class Course {
+    - course_code: str
+    - title: str
+    - credit: float
+}
+
+class ResultManager {
+    - students: Dict[str, Student]
+    - courses: Dict[str, Course]
+    + add_student(student_id, name)
+    + add_course(course_code, title, credit)
+    + enter_marks(student_id, course_code, mark)
+    + calculate_cgpa(student_id)
+    + get_result_sheet(student_id)
+}
+
+class GradeCalculation {
+    + calculate_grade(mark): tuple
+}
+
+ResultManager "1" o-- "*" Student : manages
+ResultManager "1" o-- "*" Course : manages
+Student "*" --> "*" Course : marks for
+ResultManager ..> GradeCalculation : uses
+
+@enduml
